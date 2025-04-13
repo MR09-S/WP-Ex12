@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <div id="barChart"></div>
+    <div id="lineChart"></div>
+    <div id="pieChart"></div>
+
+    <script>
+        let barData = [{ x: ['A', 'B', 'C'], y: [10, 20, 15], type: 'bar', marker: { color: 'blue' } }];
+        Plotly.newPlot("barChart", barData, { title: "Bar Chart" });
+
+        let lineData = [{ x: [1, 2, 3], y: [5, 10, 7], type: 'scatter', mode: 'lines+markers', line: { color: 'red' } }];
+        Plotly.newPlot("lineChart", lineData, { title: "Line Chart" });
+
+        let pieData = [{ labels: ['Apple', 'Banana', 'Cherry'], values: [30, 20, 50], type: 'pie' }];
+        Plotly.newPlot("pieChart", pieData, { title: "Pie Chart" });
+    </script>
+</body>
+</html>

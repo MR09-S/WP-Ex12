@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>23BCE1837</title>
+</head>
+<body>
+    <h2 style="text-align: center;">Pond Scene with Animated Boat</h2>
+    <canvas id="sceneCanvas" width="700" height="400" style="border:1px solid black; display: block; margin: auto;"></canvas>
+
+    <script>
+        const canvas = document.getElementById("sceneCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let boatX = 320;  // Initial X position of the boat
+        let speed = 1;     // Boat speed
+
+        // Function to Draw the Sun
+        function drawSun(x, y, radius) {
+            ctx.fillStyle = "yellow";
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let i = 0; i < 12; i++) {
+                let angle = (Math.PI * 2 * i) / 12;
+                let x1 = x + Math.cos(angle) * radius;
+                let y1 = y + Math.sin(angle) * radius;
+                let x2 = x + Math.cos(angle) * (radius + 15);
+                let y2 = y + Math.sin(angle) * (radius + 15);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = "yellow";
+                ctx.lineWidth = 2;
+                ctx.stroke();
+            }
+        }
+
+        // Function to Draw a House
+        function drawHouse(x, y) {
+            ctx.fillStyle = "brown"; // House Body
+            ctx.fillRect(x, y, 80, 80);
+            
+            ctx.fillStyle = "red"; // Roof
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            ctx.lineTo(x + 40, y - 40);
+            ctx.lineTo(x + 80, y);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "blue"; // Window
+            ctx.fillRect(x + 10, y + 20, 20, 20);
+
+            ctx.fillStyle = "darkred"; // Door
+            ctx.fillRect(x + 50, y + 40, 20, 40);
+        }
+
+        // Function to Draw the Pond
+        function drawPond(x, y) {
+            ctx.fillStyle = "lightblue";
+            ctx.beginPath();
+            ctx.ellipse(x, y, 120, 50, 0, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Function to Draw the Boat (Animated)
+        function drawBoat(x, y) {
+            ctx.fillStyle = "brown";
+            ctx.beginPath();
+            ctx.moveTo(x, y - 10);
+            ctx.lineTo(x - 30, y);
+            ctx.lineTo(x + 30, y);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Function to Draw a Duck
+        function drawDuck(x, y) {
+            ctx.fillStyle = "yellow";
+            ctx.beginPath();
+            ctx.arc(x, y, 15, 0, Math.PI * 2); // Body
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.arc(x + 15, y - 5, 10, 0, Math.PI * 2); // Head
+            ctx.fill();
+
+            ctx.fillStyle = "orange"; // Beak
+            ctx.beginPath();
+            ctx.moveTo(x + 25, y - 5);
+            ctx.lineTo(x + 30, y);
+            ctx.lineTo(x + 25, y + 2);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.fillStyle = "black"; // Eye
+            ctx.beginPath();
+            ctx.arc(x + 18, y - 8, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Function to Draw a Flower
+        function drawFlower(x, y) {
+            ctx.fillStyle = "green"; // Stem
+            ctx.fillRect(x, y, 5, 40);
+
+            ctx.fillStyle = "pink"; // Petals
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                let angle = (Math.PI * 2 * i) / 5;
+                let petalX = x + Math.cos(angle) * 20;
+                let petalY = y - 10 + Math.sin(angle) * 20;
+                ctx.arc(petalX, petalY, 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            ctx.fillStyle = "yellow"; // Center
+            ctx.beginPath();
+            ctx.arc(x, y - 10, 7, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Function to Draw Rocks
+        function drawRocks(x, y) {
+            ctx.fillStyle = "gray";
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2);
+            ctx.arc(x + 15, y + 5, 12, 0, Math.PI * 2);
+            ctx.arc(x - 10, y + 8, 9, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // Function to Draw Scene Elements
+        function drawScene() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear canvas
+
+            drawSun(600, 50, 30);  // Draw Sun
+            drawHouse(100, 180);   // Draw House
+            drawPond(350, 250);    // Draw Pond
+            drawBoat(boatX, 250);  // Draw moving boat
+            drawDuck(450, 270);    // Draw Duck
+            drawFlower(550, 250);  // Draw Flower
+            drawRocks(150, 300);   // Draw Rocks near House
+            drawRocks(520, 280);   // Draw Rocks near Flower
+
+            // Move boat left and right
+            boatX += speed;
+            if (boatX > 380 || boatX < 320) {
+                speed *= -1; // Change direction
+            }
+
+            requestAnimationFrame(drawScene); // Loop animation
+        }
+
+        drawScene(); // Start animation
+    </script>
+</body>
+</html>
